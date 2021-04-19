@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $email = $form['email'];
 		$password = $form['password'];
-        $password_cookie_token = md5($array_user_data["id"].$password.time());
+        $password_cookie_token = md5(isset($array_user_data["id"]).$password.time());
     
         $stmt_token = $pdo->prepare("UPDATE `users` SET `password_cookie_token` = '".$password_cookie_token."' WHERE email = '".$email."'");
         $stmt_token->execute([$password_cookie_token, $email]); 
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                                         <div class="col-md-6">
-                                            <input id="email" type="text" class="form-control <?= isset($errors['email']) ? "is-invalid" : "" ; ?>" name="email"  autocomplete="email" autofocus value="<?= $email ?>">
+                                            <input id="email" type="text" class="form-control <?= isset($errors['email']) ? "is-invalid" : "" ; ?>" name="email"  autocomplete="email" autofocus value="<?= isset($email); ?>">
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong><?= isset($errors['email']) ? $errors['email'] : "" ; ?></strong>
                                                 </span>

@@ -7,28 +7,30 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SESSION['messageSuccess']) {
+if (isset($_SESSION['messageSuccess'])) {
     $messageSuccess = "<div class=\"alert alert-success\" role=\"alert\">Комментарий успешно добавлен </div>";
   unset($_SESSION['messageSuccess']);
 }
 
-if ($_SESSION ['textErrorMessage']){
+if (isset($_SESSION ['textErrorMessage'])){
     $textErrorMessage = "<div class=\"alert alert-danger\" role=\"alert\">Это поле надо заполнить</div>";
     unset($_SESSION['textErrorMessage']);
 }
 
-if ($_SESSION ['nameErrorMessage']){
+if (isset($_SESSION ['nameErrorMessage'])){
     $nameErrorMessage = "<div class=\"alert alert-danger\" role=\"alert\">Это поле надо заполнить</div>";
     unset($_SESSION['nameErrorMessage']);
 }
 
-$user_id = $_SESSION['user']['id'];
+$user_id = isset($_SESSION['user']['id']);
 
 $admin_role = $pdo->prepare("SELECT * FROM users WHERE id =?");
 $admin_role->execute([$user_id]); 
 $admin_result = $admin_role->fetch(PDO::FETCH_ASSOC);
 
 ?>
+
+<pre><?php //var_dump($_SESSION);?></pre>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +103,7 @@ $admin_result = $admin_role->fetch(PDO::FETCH_ASSOC);
                             <div class="card-header"><h3>Комментарии</h3></div>
 
                             <div class="card-body">
-                              <?= $messageSuccess ?>
+                              <?= isset($messageSuccess); ?>
 							<?php foreach($result as $comment):?>								  
                                 <div class="media">								
                                   <img src="<?= $comment['avatar']?>" class="mr-3" alt="..." width="64" height="64">
@@ -128,19 +130,19 @@ $admin_result = $admin_role->fetch(PDO::FETCH_ASSOC);
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Имя</label>
                                         <input name="name" class="form-control" id="exampleFormControlTextarea1" />
-                                        <p><?= $nameErrorMessage ?></p>
+                                        <p><?= isset($nameErrorMessage); ?></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Сообщение</label>
                                         <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        <p><?= $textErrorMessage ?></p>
+                                        <p><?= isset($textErrorMessage) ; ?></p>
                                     </div>
                                     <div class="btn btn-success">Отправить</div>
                                 <?php else: ?>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Сообщение</label>
                                         <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                        <p><?= $textErrorMessage ?></p>
+                                        <p><?= isset($textErrorMessage) ; ?></p>
                                     </div>
                                     <button type="submit" class="btn btn-success">Отправить</button>
                                 <?php endif; ?>

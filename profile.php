@@ -8,22 +8,22 @@ $stmt_profile = $pdo->prepare("SELECT * FROM users WHERE id =?");
 $stmt_profile->execute([$user_id]); 
 $result = $stmt_profile->fetchAll(PDO::FETCH_ASSOC);
 
-if ($_SESSION['messageProfileSucces']) {
+if (isset($_SESSION['messageProfileSucces'])) {
     $messageProfile = "<div class=\"alert alert-success\" role=\"alert\">Профиль успешно обновлен</div>";
   unset($_SESSION['messageProfileSucces']);
 }
 
-if ($_SESSION['messageProfileError']) {
+if (isset($_SESSION['messageProfileError'])) {
     $messageProfile = "<div class=\"alert alert-danger\" role=\"alert\">Ошибка обновления профиля</div>";
   unset($_SESSION['messageProfileError']);
 }
 
-if ($_SESSION['messagePasswordSucces']) {
+if (isset($_SESSION['messagePasswordSucces'])) {
     $messagePassword = "<div class=\"alert alert-success\" role=\"alert\">Пароль успешно обновлен</div>";
   unset($_SESSION['messagePasswordSucces']);
 }
 
-if ($_SESSION['messagePasswordError']) {
+if (isset($_SESSION['messagePasswordError'])) {
     $messagePassword = "<div class=\"alert alert-danger\" role=\"alert\">Ошибка обновления пароля</div>";
   unset($_SESSION['messagePasswordError']);
 }
@@ -104,7 +104,7 @@ $admin_result = $admin_role->fetch(PDO::FETCH_ASSOC);
                         <div class="card-header"><h3>Профиль пользователя</h3></div>
 
                         <div class="card-body">
-                          <?= $messageProfile ?>
+                          <?= isset($messageProfile) ; ?>
 
                             <form action="profile-edit.php" method="POST" enctype="multipart/form-data">
                                 <div class="row">
@@ -155,7 +155,7 @@ $admin_result = $admin_role->fetch(PDO::FETCH_ASSOC);
                         <div class="card-header"><h3>Безопасность</h3></div>
 
                         <div class="card-body">
-                            <?= $messagePassword ?>
+                            <?= isset($messagePassword); ?>
 
                             <form action="password-edit.php" method="post">
                                 <div class="row">

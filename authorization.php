@@ -8,7 +8,7 @@ if(isset($_COOKIE["password_cookie_token"]) && !empty($_COOKIE["password_cookie_
 	$user_cookie_result = $stmt_user_cookie->fetchAll(PDO::FETCH_ASSOC);
 	
 	if($user_cookie_result){
-        $_SESSION['email'] = $$user_cookie_result["email"];
-        $_SESSION['password'] = $$user_cookie_result["password"];
+        $_SESSION['email'] = isset($user_cookie_result["email"]);
+        $_SESSION['password'] = isset($user_cookie_result["password"]);
 	}
 }

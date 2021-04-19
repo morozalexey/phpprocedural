@@ -3,10 +3,10 @@ require_once 'init.php';
 require_once 'authorization.php';
 
 $user = $_POST;
-$name = $_POST['name'];
-$email = $_POST['email'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-$password_confirmation = password_hash($_POST['password_confirmation'], PASSWORD_DEFAULT);
+$name = isset($_POST['name']);
+$email = isset($_POST['email']);
+$password = password_hash(isset($_POST['password']), PASSWORD_DEFAULT);
+$password_confirmation = password_hash(isset($_POST['password_confirmation']), PASSWORD_DEFAULT);
 
 $required_fields = ['name', 'email', 'password', 'password_confirmation'];
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(empty($errors)){
-    $sql = "INSERT INTO users (name, email, password, dt_add, avatar, admin) VALUES (:name, :email, :password, NOW(), "img/no-user.jpg", 0)";
+    $sql = "INSERT INTO users (name, email, password, dt_add, avatar, admin) VALUES (:name, :email, :password, NOW(), 'img/avatar.png', 0)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':email', $email);
